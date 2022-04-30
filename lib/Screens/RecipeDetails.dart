@@ -1,15 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:project_food/model/RecipeMode.dart';
+import 'package:project_food/model/MonAn.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+class RecipeDetails extends StatefulWidget {
+  final MonAn recipeModel;
 
-class RecipeDetails extends StatelessWidget {
-  final RecipeModel recipeModel;
-  RecipeDetails({
-    @required this.recipeModel,
-  });
+  const RecipeDetails({Key key, this.recipeModel}) : super(key: key);
+
+  @override
+  State<RecipeDetails> createState() => _RecipeDetailsState(recipeModel);
+}
+
+class _RecipeDetailsState extends State<RecipeDetails> {
+  final MonAn recipeModel;
+
+  _RecipeDetailsState(this.recipeModel);
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +32,7 @@ class RecipeDetails extends StatelessWidget {
         padding: EdgeInsets.symmetric(
           horizontal: 12,
         ),
-        minHeight: (size.height / 2),
+        minHeight: (size.height / 1.6),
         maxHeight: size.height / 1.2,
         panel: Padding(
           padding: const EdgeInsets.all(16.0),
@@ -46,14 +53,14 @@ class RecipeDetails extends StatelessWidget {
                 height: 30,
               ),
               Text(
-                recipeModel.title,
+                recipeModel.tenMon,
                 style: _textTheme.headline6,
               ),
               SizedBox(
                 height: 10,
               ),
               Text(
-                recipeModel.writer,
+                recipeModel.danhMuc,
                 style: _textTheme.caption,
               ),
               SizedBox(
@@ -82,7 +89,7 @@ class RecipeDetails extends StatelessWidget {
                     width: 4,
                   ),
                   Text(
-                    recipeModel.cookingTime.toString() + '\'',
+                    recipeModel.thoiGian.toString() + '\'',
                   ),
                   SizedBox(
                     width: 20,
@@ -95,9 +102,9 @@ class RecipeDetails extends StatelessWidget {
                   SizedBox(
                     width: 10,
                   ),
-                  Text(
-                    recipeModel.servings.toString() + ' Servings',
-                  ),
+                  // Text(
+                  //   recipeModel.servings.toString() + ' Servings',
+                  // ),
                 ],
               ),
               SizedBox(
@@ -123,7 +130,7 @@ class RecipeDetails extends StatelessWidget {
                             text: "Preparation".toUpperCase(),
                           ),
                           Tab(
-                            text: "Reviews".toUpperCase(),
+                            text: "Video".toUpperCase(),
                           ),
                         ],
                         labelColor: Colors.black,
@@ -149,11 +156,9 @@ class RecipeDetails extends StatelessWidget {
                         child: TabBarView(
                           children: [
                             Ingredients(recipeModel: recipeModel),
+                            Preparations(recipeModel: recipeModel),
                             Container(
-                              child: Text("Preparation Tab"),
-                            ),
-                            Container(
-                              child: Text("Reviews Tab"),
+                              child: Text("Video Tab"),
                             ),
                           ],
                         ),
@@ -172,13 +177,13 @@ class RecipeDetails extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
                   Hero(
-                    tag: recipeModel.imgPath,
+                    tag: recipeModel.hinhAnh,
                     child: ClipRRect(
-                      child: Image(
-                        width: double.infinity,
-                        height: (size.height / 2) + 50,
-                        fit: BoxFit.cover,
-                        image: AssetImage(recipeModel.imgPath),
+                      child: Image.memory(
+                          recipeModel.hinhAnh,
+                          fit: BoxFit.fill,
+                          height: 280,
+                          width: 480,
                       ),
                     ),
                   ),
@@ -220,7 +225,7 @@ class Ingredients extends StatelessWidget {
     @required this.recipeModel,
   }) : super(key: key);
 
-  final RecipeModel recipeModel;
+  final MonAn recipeModel;
 
   @override
   Widget build(BuildContext context) {
@@ -232,13 +237,13 @@ class Ingredients extends StatelessWidget {
             ListView.separated(
               shrinkWrap: true,
               physics: ScrollPhysics(),
-              itemCount: recipeModel.ingredients.length,
+              itemCount: 1,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(
                     vertical: 2.0,
                   ),
-                  child: Text('⚫️ ' + recipeModel.ingredients[index]),
+                  child: Text(recipeModel.nguyenLieu),
                 );
               },
               separatorBuilder: (BuildContext context, int index) {
@@ -248,6 +253,25 @@ class Ingredients extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class Preparations extends StatelessWidget {
+  const Preparations({
+    Key key,
+    @required this.recipeModel,
+  }) : super(key: key);
+
+  final MonAn recipeModel;
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.fromLTRB(0, 20, 0, 0),
+        child: Text(recipeModel.cachNau, textAlign: TextAlign.justify,)
+      )
     );
   }
 }

@@ -1,12 +1,35 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:project_food/Screens/RecipeDetails.dart';
 
-import 'model/RecipeMode.dart';
+import 'model/DBHelper.dart';
+import 'model/MonAn.dart';
 
-class NewRecipe extends StatelessWidget {
+class NewRecipe extends StatefulWidget {
+  @override
+  State<NewRecipe> createState() => _NewRecipeState();
+}
+
+class _NewRecipeState extends State<NewRecipe> with AutomaticKeepAliveClientMixin<NewRecipe>   {
+  DBHelper dbHelper;
+  List<MonAn> lstMonAn;
+
+  Future<List<MonAn>> _getListMonAn() async {
+    lstMonAn = await dbHelper.getListMonAn(5);
+  }
+
+  @override
+  void initState() {
+    dbHelper = DBHelper();
+    dbHelper.copyDB();
+    _getListMonAn();
+  }
+
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -14,40 +37,50 @@ class NewRecipe extends StatelessWidget {
             SizedBox(
               height: 20,
             ),
-            ListView.builder(
-              physics: ScrollPhysics(),
-              shrinkWrap: true,
-              itemCount: RecipeModel.demoRecipe.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 12,
-                  ),
-                  child: InkWell(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => RecipeDetails(
-                            recipeModel: RecipeModel.demoRecipe[index],
+            FutureBuilder<List<MonAn>>(
+              future: _getListMonAn(),
+              builder: (BuildContext context, AsyncSnapshot<List<MonAn>> snapshot) {
+                  return ListView.builder(
+                    physics: ScrollPhysics(),
+                    shrinkWrap: true,
+                    itemCount: lstMonAn.length,
+                    itemBuilder: (BuildContext context, int index) {
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 12,
+                        ),
+                        child: InkWell(
+                          onTap: () =>
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) =>
+                                        RecipeDetails(
+                                          recipeModel: lstMonAn[index],
+                                        ),
+                                  )),
+                          child: RecipeCard(
+                            recipeModel: lstMonAn[index],
                           ),
-                        )),
-                    child: RecipeCard(
-                      recipeModel: RecipeModel.demoRecipe[index],
-                    ),
-                  ),
-                );
-              },
-            )
+                        ),
+                      );
+                    },
+                  );
+              })
           ],
         ),
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }
 
 class RecipeCard extends StatefulWidget {
-  final RecipeModel recipeModel;
+  final MonAn recipeModel;
   RecipeCard({
     @required this.recipeModel,
   });
@@ -71,34 +104,34 @@ class _RecipeCardState extends State<RecipeCard> {
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(24),
                 child: Hero(
-                  tag: widget.recipeModel.imgPath,
-                  child: Image(
-                    height: 320,
-                    width: 320,
-                    fit: BoxFit.cover,
-                    image: AssetImage(widget.recipeModel.imgPath),
+                  tag: widget.recipeModel.hinhAnh,
+                  child: Image.memory(
+                      widget.recipeModel.hinhAnh,
+                      fit: BoxFit.fill,
+                      height: 250,
+                      width: 450,
                   ),
                 ),
               ),
             ),
-            Positioned(
-              top: 20,
-              right: 40,
-              child: InkWell(
-                onTap: () {
-                  setState(() {
-                    saved = !saved;
-                  });
-                },
-                child: Icon(
-                  saved
-                      ? FlutterIcons.bookmark_check_mco
-                      : FlutterIcons.bookmark_outline_mco,
-                  color: Colors.white,
-                  size: 38,
-                ),
-              ),
-            ),
+            // Positioned(
+            //   top: 20,
+            //   right: 40,
+            //   child: InkWell(
+            //     onTap: () {
+            //       setState(() {
+            //         saved = !saved;
+            //       });
+            //     },
+            //     // child: Icon(
+            //     //   saved
+            //     //       ? FlutterIcons.bookmark_check_mco
+            //     //       : FlutterIcons.bookmark_outline_mco,
+            //     //   color: Colors.white,
+            //     //   size: 38,
+            //     // ),
+            //   ),
+            // ),
           ],
         ),
         SizedBox(
@@ -115,14 +148,14 @@ class _RecipeCardState extends State<RecipeCard> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      widget.recipeModel.title,
+                      widget.recipeModel.tenMon,
                       style: Theme.of(context).textTheme.subtitle1,
                     ),
                     SizedBox(
                       height: 8,
                     ),
                     Text(
-                      widget.recipeModel.writer,
+                      widget.recipeModel.danhMuc,
                       style: Theme.of(context).textTheme.caption,
                     ),
                   ],
@@ -144,7 +177,7 @@ class _RecipeCardState extends State<RecipeCard> {
                       width: 4,
                     ),
                     Text(
-                      widget.recipeModel.cookingTime.toString() + '\'',
+                      widget.recipeModel.thoiGian.toString() + '\'',
                     ),
                     Spacer(),
                     InkWell(

@@ -1,0 +1,10 @@
+Tasks bài đồ án Flutter:
++ Màn hình loading
++ Kết nối SQLite và load dữ liệu
++ Xử lý yêu thích và trang danh sách yêu thích
++ Lịch sử xem món ăn (Lưu lịch sử xem)
++ Tìm kiếm và trang tìm kiếm
++ Bỏ mục Review trong chi tiết món ăn
+
+Làm thêm
++ Video YouTube trong từng món ăn

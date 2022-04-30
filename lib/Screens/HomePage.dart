@@ -9,9 +9,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // BOTTOM NAV BAR
       bottomNavigationBar: Container(
         // color: Colors.grey[300],
         height: 50,
@@ -37,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SafeArea(
         bottom: false,
         child: DefaultTabController(
-          length: 3,
+          length: 2,
           initialIndex: 0,
           child: Column(
             children: [
@@ -50,9 +52,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 tabs: [
                   Tab(
                     text: "New Recipes".toUpperCase(),
-                  ),
-                  Tab(
-                    text: "Favourites".toUpperCase(),
                   ),
                   Tab(
                     text: "Categories".toUpperCase(),
@@ -81,14 +80,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     Container(
                       child: Center(
                         child: Text(
-                          'Favourite Section',
-                        ),
-                      ),
-                    ),
-                    Container(
-                      child: Center(
-                        child: Text(
-                          'Cetegories',
+                          'Categories',
                         ),
                       ),
                     ),
