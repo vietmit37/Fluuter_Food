@@ -2,9 +2,10 @@ import 'dart:io';
 import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
+import 'package:project_food/model/Category.dart';
 import 'package:sqflite/sqflite.dart';
 
-import 'MonAn.dart';
+import 'Recipe.dart';
 
 class DBHelper {
   copyDB() async {
@@ -26,17 +27,31 @@ class DBHelper {
     return await openDatabase(databasePath);
   }
 
-  Future<List<MonAn>> getListMonAn(int limit) async {
-    List<MonAn> data = new List<MonAn>();
+  Future<List<Recipe>> getRecipeList(int limit) async {
+    List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
     // var list = await db.rawQuery('SELECT * FROM Students');
-    var list = await db.query('MonAn', limit: limit);
+    var list = await db.query('Recipes', limit: limit);
     for (var item in list.toList()){
-      data.add(MonAn(
-          maMon: item['maMon'], tenMon: item['tenMon'],
-          danhMuc: item['danhMuc'], nguyenLieu: item['nguyenLieu'],
-          cachNau: item['cachNau'], yeuThich: item['yeuThich'],
-          hinhAnh: item['hinhAnh'], thoiGian: item['thoiGian']
+      data.add(Recipe(
+          id: item['id'], name: item['name'],
+          categoryName: item['categoryName'], ingredients: item['ingredients'],
+          preparation: item['preparation'], liked: item['liked'],
+          image: item['image'], time: item['time']
+      ));
+    }
+    db.close();
+    return data;
+  }
+
+  Future<List<Category>> getCategoryList() async {
+    List<Category> data = new List<Category>();
+    Database db = await openDB();
+    // var list = await db.rawQuery('SELECT * FROM Students');
+    var list = await db.query('Categories');
+    for (var item in list.toList()){
+      data.add(Category(
+          name: item['name'], image: item['image']
       ));
     }
     db.close();

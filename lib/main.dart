@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
-
-import 'Screens/HomePage.dart';
+import 'home/homePage.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
