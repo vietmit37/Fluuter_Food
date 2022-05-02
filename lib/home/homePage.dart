@@ -52,10 +52,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 indicatorColor: Colors.red,
                 tabs: [
                   Tab(
-                    text: "New Recipes".toUpperCase(),
+                    text: "Món mới".toUpperCase(),
                   ),
                   Tab(
-                    text: "Categories".toUpperCase(),
+                    text: "Danh mục".toUpperCase(),
                   ),
                 ],
                 labelColor: Colors.black,

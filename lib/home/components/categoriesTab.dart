@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_food/home/components/recipeList.dart';
 import 'package:project_food/model/Category.dart';
 import 'package:project_food/model/DBHelper.dart';
 
@@ -59,15 +60,14 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         ),
                         child: InkWell(
                           child: Container(
-
-                            height: 220,
+                            height: 170,
                             child: Align(
                               alignment: Alignment.center,
                               child: Text(categoryList[index].name.toUpperCase(),
                                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 2.5),)
                             ),
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(20.0),
                               image: new DecorationImage(
                                 fit: BoxFit.fitWidth,
                                 colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
@@ -75,7 +75,13 @@ class _CategoriesPageState extends State<CategoriesPage> {
                           ),
                       ),
                         ),
-                          onTap: () => print(categoryList[index].name),
+                          onTap: () {
+                            Navigator.push(context,
+                              MaterialPageRoute(
+                                builder: (context) => RecipeListPage(categoryName: categoryList[index].name),
+                              ),
+                            );
+                          },
                       )
                       );
                     },

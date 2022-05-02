@@ -115,8 +115,8 @@ class _RecipeCardState extends State<RecipeCard> {
                   child: Image.memory(
                       widget.recipe.image,
                       fit: BoxFit.fill,
-                      height: 250,
-                      width: 450,
+                      height: 220,
+                      width: 420,
                   ),
                 ),
               ),
