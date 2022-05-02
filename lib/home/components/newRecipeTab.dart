@@ -14,7 +14,7 @@ class NewRecipe extends StatefulWidget {
   State<NewRecipe> createState() => _NewRecipeState();
 }
 
-class _NewRecipeState extends State<NewRecipe> with AutomaticKeepAliveClientMixin<NewRecipe>   {
+class _NewRecipeState extends State<NewRecipe> {
   DBHelper dbHelper;
   List<Recipe> recipeList;
 
@@ -33,7 +33,6 @@ class _NewRecipeState extends State<NewRecipe> with AutomaticKeepAliveClientMixi
 
   @override
   Widget build(BuildContext context) {
-    super.build(context);
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -122,10 +121,6 @@ class _NewRecipeState extends State<NewRecipe> with AutomaticKeepAliveClientMixi
       ),
     );
   }
-
-  @override
-  // TODO: implement wantKeepAlive
-  bool get wantKeepAlive => true;
 }
 
 class RecipeCard extends StatefulWidget {
@@ -157,8 +152,8 @@ class _RecipeCardState extends State<RecipeCard> {
                   child: Image.memory(
                       widget.recipe.image,
                       fit: BoxFit.fill,
-                      height: 250,
-                      width: 450,
+                      height: 220,
+                      width: 420,
                   ),
                 ),
               ),

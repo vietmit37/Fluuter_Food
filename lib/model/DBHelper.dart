@@ -44,10 +44,27 @@ class DBHelper {
     return data;
   }
 
+  Future<List<Recipe>> getRecipesByCate(String categoryName) async {
+    List<Recipe> data = new List<Recipe>();
+    Database db = await openDB();
+    var list = await db.rawQuery('SELECT * FROM Recipes WHERE categoryName = "$categoryName"');
+    // var list = await db.query('Recipes', limit: limit);
+    for (var item in list.toList()){
+      data.add(Recipe(
+          id: item['id'], name: item['name'],
+          ingredients: item['ingredients'], time: item['time'],
+          preparation: item['preparation'], liked: item['liked'],
+          image: item['image'], categoryName: item['categoryName']
+      ));
+    }
+    db.close();
+    return data;
+  }
+
   Future<List<Category>> getCategoryList() async {
     List<Category> data = new List<Category>();
     Database db = await openDB();
-    // var list = await db.rawQuery('SELECT * FROM Students');
+    // var list = await db.rawQuery('SELECT name FROM Categories');
     var list = await db.query('Categories');
     for (var item in list.toList()){
       data.add(Category(
