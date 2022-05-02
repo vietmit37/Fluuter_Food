@@ -47,7 +47,7 @@ class DBHelper {
   Future<List<Category>> getCategoryList() async {
     List<Category> data = new List<Category>();
     Database db = await openDB();
-    // var list = await db.rawQuery('SELECT * FROM Students');
+    // var list = await db.rawQuery('SELECT name FROM Categories');
     var list = await db.query('Categories');
     for (var item in list.toList()){
       data.add(Category(
