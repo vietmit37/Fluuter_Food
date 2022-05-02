@@ -1,3 +1,5 @@
+
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -36,8 +38,43 @@ class _NewRecipeState extends State<NewRecipe> with AutomaticKeepAliveClientMixi
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(
-              height: 20,
+            Padding(
+                padding: const EdgeInsets.only(
+                  bottom: 12.0,
+                )
+            ),
+            Container(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(26.0),
+               child:
+               Image.asset("assets/images/img4.jpg"),
+              ),
+            ),
+            Stack(
+              children: <Widget>[
+                SafeArea(child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Container(
+                        margin: EdgeInsets.symmetric(vertical: 20),
+                        padding: EdgeInsets.symmetric(horizontal: 30,vertical: 5),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(29.5),
+                        ),
+                        child: TextField(
+                          decoration:InputDecoration(
+                            hintText: "Search",
+                            border: InputBorder.none,
+                          ) ,
+                        ),
+                      )
+                    ],
+                  ),
+                ))
+              ],
             ),
             FutureBuilder<List<Recipe>>(
               future: getRecipeList(),
