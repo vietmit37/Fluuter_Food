@@ -53,33 +53,35 @@ class _NewRecipeState extends State<NewRecipe> {
                     )
                   );
                 }
-                return ListView.builder(
-                  physics: ScrollPhysics(),
-                  shrinkWrap: true,
-                  itemCount: recipeList.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                        horizontal: 12,
-                        vertical: 12,
-                      ),
-                      child: InkWell(
-                        onTap: () =>
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) =>
-                                      RecipeDetails(
-                                        recipe: recipeList[index],
-                                      ),
-                                )),
-                        child: RecipeCard(
-                          recipe: recipeList[index],
-                        ),
-                      ),
-                    );
-                  },
-                );
+                return Container(
+                    margin: EdgeInsets.only(bottom: 85),
+                    child: ListView.builder(
+                      physics: ScrollPhysics(),
+                      shrinkWrap: true,
+                      itemCount: recipeList.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 12,
+                          ),
+                          child: InkWell(
+                            onTap: () =>
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          RecipeDetails(
+                                            recipe: recipeList[index],
+                                          ),
+                                    )),
+                            child: RecipeCard(
+                              recipe: recipeList[index],
+                            ),
+                          ),
+                        );
+                      },
+                ));
               })
           ],
         ),
@@ -106,6 +108,7 @@ class _RecipeCardState extends State<RecipeCard> {
   void initState() {
     dbHelper = DBHelper();
     likeColor = widget.recipe.liked == 1 ? Colors.red : Colors.black;
+    super.initState();
   }
 
   @override
