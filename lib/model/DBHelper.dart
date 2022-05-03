@@ -44,10 +44,18 @@ class DBHelper {
     return data;
   }
 
+  likeRecipe(int recipeID, int likedState) async {
+    Database db = await openDB();
+    int setStatus = likedState == 1 ? 0 : 1;
+    await db.rawQuery("UPDATE Recipes SET liked = $setStatus WHERE id = $recipeID");
+    // var list = await db.query('Recipes', limit: limit);
+    db.close();
+  }
+
   Future<List<Recipe>> getRecipesByCate(String categoryName) async {
     List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
-    var list = await db.rawQuery('SELECT * FROM Recipes WHERE categoryName = "$categoryName"');
+    var list = await db.rawQuery("SELECT * FROM Recipes WHERE categoryName = '$categoryName'");
     // var list = await db.query('Recipes', limit: limit);
     for (var item in list.toList()){
       data.add(Recipe(
@@ -69,6 +77,23 @@ class DBHelper {
     for (var item in list.toList()){
       data.add(Category(
           name: item['name'], image: item['image']
+      ));
+    }
+    db.close();
+    return data;
+  }
+
+  Future<List<Recipe>> getLikedRecipes() async {
+    List<Recipe> data = new List<Recipe>();
+    Database db = await openDB();
+    var list = await db.rawQuery("SELECT * FROM Recipes WHERE liked = 1");
+    // var list = await db.query('Recipes', limit: limit);
+    for (var item in list.toList()){
+      data.add(Recipe(
+          id: item['id'], name: item['name'],
+          ingredients: item['ingredients'], time: item['time'],
+          preparation: item['preparation'], liked: item['liked'],
+          image: item['image'], categoryName: item['categoryName']
       ));
     }
     db.close();

@@ -1,5 +1,3 @@
-
-
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -22,7 +20,7 @@ class _NewRecipeState extends State<NewRecipe> {
     // Dòng dưới để test loading
     // await Future.delayed(Duration(seconds: 2));
 
-    recipeList = await dbHelper.getRecipeList(5);
+    recipeList = await dbHelper.getRecipeList(3);
   }
 
   @override
@@ -134,8 +132,15 @@ class RecipeCard extends StatefulWidget {
 }
 
 class _RecipeCardState extends State<RecipeCard> {
-  bool loved = false;
-  bool saved = false;
+  DBHelper dbHelper;
+  Color likeColor;
+
+  @override
+  void initState() {
+    dbHelper = DBHelper();
+    likeColor = widget.recipe.liked == 1 ? Colors.red : Colors.black;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -158,24 +163,6 @@ class _RecipeCardState extends State<RecipeCard> {
                 ),
               ),
             ),
-            // Positioned(
-            //   top: 20,
-            //   right: 40,
-            //   child: InkWell(
-            //     onTap: () {
-            //       setState(() {
-            //         saved = !saved;
-            //       });
-            //     },
-            //     // child: Icon(
-            //     //   saved
-            //     //       ? FlutterIcons.bookmark_check_mco
-            //     //       : FlutterIcons.bookmark_outline_mco,
-            //     //   color: Colors.white,
-            //     //   size: 38,
-            //     // ),
-            //   ),
-            // ),
           ],
         ),
         SizedBox(
@@ -227,12 +214,13 @@ class _RecipeCardState extends State<RecipeCard> {
                     InkWell(
                       onTap: () {
                         setState(() {
-                          loved = !loved;
+                          dbHelper.likeRecipe(widget.recipe.id, widget.recipe.liked);
+                          likeColor = likeColor == Colors.red ? Colors.black : Colors.red;
                         });
                       },
                       child: Icon(
                         FlutterIcons.heart_circle_mco,
-                        color: loved ? Colors.red : Colors.black,
+                        color: likeColor,
                       ),
                     ),
                   ],
