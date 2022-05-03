@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:project_food/model/DBHelper.dart';
 import 'package:project_food/model/Recipe.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+
 class RecipeDetails extends StatefulWidget {
   final Recipe recipe;
-
   const RecipeDetails({Key key, this.recipe}) : super(key: key);
 
   @override
@@ -14,9 +15,18 @@ class RecipeDetails extends StatefulWidget {
 }
 
 class _RecipeDetailsState extends State<RecipeDetails> {
+  DBHelper dbHelper;
   final Recipe recipe;
+  Color likeColor;
 
   _RecipeDetailsState(this.recipe);
+
+  @override
+  void initState() {
+    dbHelper = DBHelper();
+    likeColor = recipe.liked == 1 ? Colors.red : Colors.black;
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,16 +78,17 @@ class _RecipeDetailsState extends State<RecipeDetails> {
               ),
               Row(
                 children: [
-                  Icon(
-                    FlutterIcons.heart_circle_mco,
-                    color: Colors.red,
-                  ),
-                  SizedBox(
-                    width: 5,
-                  ),
-                  Text(
-                    "198",
-                    // style: _textTheme.caption,
+                  InkWell(
+                      // onTap: () {
+                      //   setState(() {
+                      //     dbHelper.likeRecipe(widget.recipe.id, widget.recipe.liked);
+                      //     likeColor = likeColor == Colors.red ? Colors.black : Colors.red;
+                      //   });
+                      // },
+                      child: Icon(
+                        FlutterIcons.heart_circle_mco,
+                        color: likeColor,
+                      )
                   ),
                   SizedBox(
                     width: 10,
@@ -185,15 +196,6 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                     ),
                   ),
                 ],
-              ),
-              Positioned(
-                top: 40,
-                right: 20,
-                child: Icon(
-                  FlutterIcons.bookmark_outline_mco,
-                  color: Colors.white,
-                  size: 38,
-                ),
               ),
               Positioned(
                 top: 40,

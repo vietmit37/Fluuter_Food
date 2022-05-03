@@ -48,43 +48,46 @@ class _CategoriesPageState extends State<CategoriesPage> {
                         )
                     );
                   }
-                  return ListView.builder(
-                    physics: ScrollPhysics(),
-                    shrinkWrap: true,
-                    itemCount: categoryList.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 12,
-                          vertical: 12,
-                        ),
-                        child: InkWell(
-                          child: Container(
-                            height: 170,
-                            child: Align(
-                              alignment: Alignment.center,
-                              child: Text(categoryList[index].name.toUpperCase(),
-                                style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 2.5),)
+                  return Container(
+                      margin: EdgeInsets.only(bottom: 90),
+                      child:ListView.builder(
+                        physics: ScrollPhysics(),
+                        shrinkWrap: true,
+                        itemCount: categoryList.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 12,
+                              vertical: 12,
                             ),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(20.0),
-                              image: new DecorationImage(
-                                fit: BoxFit.fitWidth,
-                                colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
-                                image: AssetImage('assets/images/categories/' + categoryList[index].image),
-                          ),
-                      ),
-                        ),
-                          onTap: () {
-                            Navigator.push(context,
-                              MaterialPageRoute(
-                                builder: (context) => RecipeListPage(categoryName: categoryList[index].name),
+                            child: InkWell(
+                              child: Container(
+                                height: 170,
+                                child: Align(
+                                  alignment: Alignment.center,
+                                  child: Text(categoryList[index].name.toUpperCase(),
+                                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 2.5),)
+                                ),
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20.0),
+                                  image: new DecorationImage(
+                                    fit: BoxFit.fitWidth,
+                                    colorFilter: ColorFilter.mode(Colors.black.withOpacity(0.8), BlendMode.dstATop),
+                                    image: AssetImage('assets/images/categories/' + categoryList[index].image),
                               ),
-                            );
-                          },
+                          ),
+                            ),
+                              onTap: () {
+                                Navigator.push(context,
+                                  MaterialPageRoute(
+                                    builder: (context) => RecipeListPage(categoryName: categoryList[index].name),
+                                  ),
+                                );
+                              },
+                          )
+                          );
+                        },
                       )
-                      );
-                    },
                   );
                 })
           ],
