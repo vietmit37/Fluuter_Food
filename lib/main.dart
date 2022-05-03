@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-
-import 'Screens/HomePage.dart';
+import 'home/homePage.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home:MyHomePage(),
+      home: MyHomePage(),
     );
   }
 }
