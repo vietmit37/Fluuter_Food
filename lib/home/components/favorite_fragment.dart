@@ -162,7 +162,14 @@ class _FavoriteRecipeCardState extends State<FavoriteRecipeCard> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                flex: 2,
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      CircleAvatar(backgroundImage: AssetImage("assets/images/img1.jpg"),)
+                    ],
+                  )),
+              Flexible(
+                flex: 1,
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
