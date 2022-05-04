@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_food/splashscreen.dart';
 import 'home/homePage.dart';
 
 void main() {
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(),
+      home: SplashScreen(),
     );
   }
 }
