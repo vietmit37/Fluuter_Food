@@ -22,7 +22,7 @@ class HomeFragment extends StatelessWidget {
                     width: width,
                     decoration: BoxDecoration(
                         image:DecorationImage(
-                            image: AssetImage("assets/images/img1.jpg"),
+                            image: AssetImage("assets/images/bg_2.jpg"),
                             fit: BoxFit.cover
                         )
                     ),
@@ -42,14 +42,14 @@ class HomeFragment extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 90,
-                    left: 20,
+                    left: 30,
                     child: RichText(
                       text: TextSpan(
                           text: "Welcome",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,
-                            fontSize: 20,
+                            fontSize: 24,
                           ),
                           children: [
                             TextSpan(
@@ -57,8 +57,8 @@ class HomeFragment extends StatelessWidget {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 24,
-                                )
+                                  fontSize: 30,
+                                ),
                             )
                           ]
                       ),
@@ -82,7 +82,7 @@ class HomeFragment extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TabBar(
-                          labelColor: Colors.redAccent,
+                          labelColor: Colors.orange,
                           unselectedLabelStyle: TextStyle(
                               fontWeight: FontWeight.normal,fontSize: 14
                           ),
@@ -98,7 +98,7 @@ class HomeFragment extends StatelessWidget {
                             ),
                           ],
                           indicator: DotIndicator(
-                            color: Colors.redAccent,
+                            color: Colors.orange,
                             distanceFromCenter: 16,
                             radius: 3,
                             paintingStyle: PaintingStyle.fill,

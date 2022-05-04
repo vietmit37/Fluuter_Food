@@ -142,7 +142,7 @@ class ArcPainter extends CustomPainter {
     Path orangeArc=Path()
         ..moveTo(0, 0)
         ..lineTo(0, size.height-170)..quadraticBezierTo(size.width/2,size.height,size.width, size.height-170)..lineTo(size.width, size.height)..lineTo(size.width, 0)..close();
-    canvas.drawPath(orangeArc, Paint()..color=Colors.orange);
+    canvas.drawPath(orangeArc, Paint()..color=Colors.orangeAccent);
 
     Path whiteArc=Path()
     ..moveTo(0.0, 0.0)
