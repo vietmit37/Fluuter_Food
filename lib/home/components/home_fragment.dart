@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_food/home/components/search.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import 'categoriesTab.dart';
@@ -18,7 +19,7 @@ class HomeFragment extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: height * 0.3,
+                    height: height * 0.29,
                     width: width,
                     decoration: BoxDecoration(
                         image:DecorationImage(
@@ -45,7 +46,7 @@ class HomeFragment extends StatelessWidget {
                     left: 30,
                     child: RichText(
                       text: TextSpan(
-                          text: "Welcome",
+                          text: "Xin chào !",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,
@@ -53,7 +54,7 @@ class HomeFragment extends StatelessWidget {
                           ),
                           children: [
                             TextSpan(
-                                text: "\nTutorial Cook",
+                                text: "\nVietCook",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
@@ -115,18 +116,26 @@ class HomeFragment extends StatelessWidget {
                         ),
                         SizedBox(height: 5,),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20,right: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextField(
+                            autofocus: false,
+                            onSubmitted: (value) {
+                              Navigator.push(context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPage(searchKeyword: value),
+                                ),
+                              );
+                            },
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(vertical: 3),
                                 prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(left: 15,right: 15),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
                                   child: Icon(
                                     Icons.search,
                                     size: 30,
                                   ),
                                 ),
-                                hintText: "Search Cook",
+                                hintText: "Tìm kiếm",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(

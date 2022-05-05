@@ -79,12 +79,12 @@ class _RecipeDetailsState extends State<RecipeDetails> {
               Row(
                 children: [
                   InkWell(
-                      // onTap: () {
-                      //   setState(() {
-                      //     dbHelper.likeRecipe(widget.recipe.id, widget.recipe.liked);
-                      //     likeColor = likeColor == Colors.red ? Colors.black : Colors.red;
-                      //   });
-                      // },
+                      onTap: () {
+                        setState(() {
+                          dbHelper.likeRecipe(widget.recipe.id, widget.recipe.liked);
+                          likeColor = likeColor == Colors.red ? Colors.black : Colors.red;
+                        });
+                      },
                       child: Icon(
                         FlutterIcons.heart_circle_mco,
                         color: likeColor,
@@ -132,10 +132,10 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                         indicatorColor: Colors.red,
                         tabs: [
                           Tab(
-                            text: "Ingredients".toUpperCase(),
+                            text: "Nguyên liệu".toUpperCase(),
                           ),
                           Tab(
-                            text: "Preparation".toUpperCase(),
+                            text: "Cách nấu".toUpperCase(),
                           ),
                           Tab(
                             text: "Video".toUpperCase(),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:project_food/home/components/home_fragment.dart';
 
+import 'components/home_fragment.dart';
 import 'components/favorite_fragment.dart';
 import 'components/history_fragment.dart';
 

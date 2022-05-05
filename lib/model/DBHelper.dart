@@ -99,4 +99,20 @@ class DBHelper {
     db.close();
     return data;
   }
+
+  Future<List<Recipe>> searchRecipes(String searchKeyword) async {
+    List<Recipe> data = new List<Recipe>();
+    Database db = await openDB();
+    var list = await db.rawQuery("SELECT * FROM Recipes WHERE name LIKE '%$searchKeyword%';");
+    for (var item in list.toList()){
+      data.add(Recipe(
+          id: item['id'], name: item['name'],
+          ingredients: item['ingredients'], time: item['time'],
+          preparation: item['preparation'], liked: item['liked'],
+          image: item['image'], categoryName: item['categoryName']
+      ));
+    }
+    db.close();
+    return data;
+  }
 }

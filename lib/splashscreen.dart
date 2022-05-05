@@ -189,7 +189,7 @@ class SplashModel{
   SplashModel(this.lottieFile,this.title,this.subtitle);
 }
 List<SplashModel>tabs=[
-  SplashModel("assets/images/lottie/food_choice.json", "Chọn Món Ăn", "Bạn không biết phải nấu món gì? \nChúng tôi\ sẽ giúp giải quyết vấn đề \nnày."),
-  SplashModel("assets/images/lottie/food_tv.json", "Làm Món Ăn", "Chúng tôi sẽ giúp bạn có những công \nthức ngon\ như của đầu bếp chuyên \nnghiệp."),
-  SplashModel("assets/images/lottie/food_food.json", "Món Ăn Phong Phú", "Chúng tôi sẽ giúp bạn có nhiều \nmón\ ăn hơn trong bữa cơm hằng \nngày."),
+  SplashModel("assets/images/lottie/food_choice.json", "Chọn món ăn", "Bạn không biết phải nấu món gì? \nChúng tôi\ sẽ giúp giải quyết vấn đề \nnày."),
+  SplashModel("assets/images/lottie/food_tv.json", "Làm món ăn", "Chúng tôi sẽ giúp bạn có những công \nthức ngon\ như của đầu bếp chuyên \nnghiệp."),
+  SplashModel("assets/images/lottie/food_food.json", "Món ăn phong phú", "Chúng tôi sẽ giúp bạn có nhiều \nmón\ ăn hơn trong bữa cơm hằng \nngày."),
 ];
