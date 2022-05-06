@@ -44,7 +44,16 @@ class _SearchPageState extends State<SearchPage> {
         title: TextField(
           controller: TextEditingController()..text = widget.searchKeyword,
           autofocus: false,
+          // onChanged: (value) async {
+          //   await Future.delayed(Duration(seconds: 2));
+          //   setState(() {
+          //     widget.searchKeyword = value;
+          //   });
+          // },
           onSubmitted: (value) {
+            if (value == '') {
+              return;
+            }
             setState(() {
               widget.searchKeyword = value;
             });

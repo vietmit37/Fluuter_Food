@@ -48,6 +48,7 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text('Món ăn yêu thích', style: TextStyle(color: Colors.black,), textAlign: TextAlign.center,),
       ),

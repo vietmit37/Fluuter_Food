@@ -84,7 +84,7 @@ class _SplashScreenState extends  State<SplashScreen>{
                                           borderRadius: BorderRadius.circular(16.0)
                                       ),
                                       child: Text(
-                                        "Let's Go",
+                                        "Bỏ qua",
                                         style: TextStyle(
                                             color: Colors.black54,
                                             fontSize: 15.0,
