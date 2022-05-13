@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:project_food/model/Category.dart';
+import 'package:project_food/model/History.dart';
 import 'package:sqflite/sqflite.dart';
 
 import 'Recipe.dart';
@@ -94,6 +95,35 @@ class DBHelper {
           ingredients: item['ingredients'], time: item['time'],
           preparation: item['preparation'], liked: item['liked'],
           image: item['image'], categoryName: item['categoryName']
+      ));
+    }
+    db.close();
+    return data;
+  }
+
+  Future<List<Recipe>> searchRecipes(String searchKeyword) async {
+    List<Recipe> data = new List<Recipe>();
+    Database db = await openDB();
+    var list = await db.rawQuery("SELECT * FROM Recipes WHERE name LIKE '%$searchKeyword%';");
+    for (var item in list.toList()){
+      data.add(Recipe(
+          id: item['id'], name: item['name'],
+          ingredients: item['ingredients'], time: item['time'],
+          preparation: item['preparation'], liked: item['liked'],
+          image: item['image'], categoryName: item['categoryName']
+      ));
+    }
+    db.close();
+    return data;
+  }
+
+  Future<List<History>> getHistory() async {
+    List<History> data = new List<History>();
+    Database db = await openDB();
+    var list = await db.query('History');
+    for (var item in list.toList()){
+      data.add(History(
+          id: item['id'], recipeID: item['recipeID'], time: item['time']
       ));
     }
     db.close();

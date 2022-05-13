@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
-import 'package:project_food/home/components/home_fragment.dart';
 
+import 'components/home_fragment.dart';
 import 'components/favorite_fragment.dart';
 import 'components/history_fragment.dart';
 
@@ -25,7 +25,7 @@ class _MyHomePageState extends State<MyHomePage> {
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: selectedIndex,
-        selectedItemColor: Colors.redAccent,
+        selectedItemColor: Colors.orange,
         unselectedItemColor: Colors.black,
         selectedLabelStyle: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
         onTap: (index){

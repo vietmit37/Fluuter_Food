@@ -48,6 +48,7 @@ class _FavoritePageState extends State<FavoritePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: true,
         backgroundColor: Colors.white,
         title: Text('Món ăn yêu thích', style: TextStyle(color: Colors.black,), textAlign: TextAlign.center,),
       ),
@@ -88,6 +89,10 @@ class _FavoritePageState extends State<FavoritePage> {
                 )
             ),
 
+            SizedBox(
+              height: 16,
+            ),
+
             FutureBuilder<List<Recipe>> (
                 future: _getLikedRecipes(dropdownValue),
                 builder: (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
@@ -101,6 +106,26 @@ class _FavoritePageState extends State<FavoritePage> {
                         )
                     );
                   }
+
+                  if (recipeList.length < 1) {
+                    return Column(
+                      children: [
+                        Center(
+                            child: Image.asset('assets/images/price_tag.png',
+                              height: 250,
+                              width: 150,
+                              color: Colors.black12,
+                              alignment: Alignment.bottomCenter,
+                            )
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Danh sách yêu thích trống', style: TextStyle(color: Colors.black54),)
+                      ],
+                    );
+                  }
+
                   return ListView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
@@ -116,8 +141,12 @@ class _FavoritePageState extends State<FavoritePage> {
                                 Navigator.push(context,
                                     MaterialPageRoute(builder: (context) => RecipeDetails(recipe: recipeList[index]))
                                 ),
-                            child: FavoriteRecipeCard(recipe: recipeList[index]),
-                          ));
+                            child: Padding(
+                                padding: EdgeInsets.symmetric(vertical: 8),
+                                child: FavoriteRecipeCard(recipe: recipeList[index])
+                            ),
+                          )
+                      );
                     },
                   );
                 })
@@ -146,6 +175,7 @@ class _FavoriteRecipeCardState extends State<FavoriteRecipeCard> {
   void initState() {
     dbHelper = DBHelper();
     likeColor = widget.recipe.liked == 1 ? Colors.red : Colors.black;
+    super.initState();
   }
 
   @override
@@ -153,31 +183,43 @@ class _FavoriteRecipeCardState extends State<FavoriteRecipeCard> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        SizedBox(
-          height: 20,
-        ),
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 24.0),
+          padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
-                flex: 2,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      widget.recipe.name,
-                      style: Theme.of(context).textTheme.subtitle1,
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                    Text(
-                      widget.recipe.categoryName,
-                      style: Theme.of(context).textTheme.caption,
-                    ),
-                  ],
+                  flex: 1,
+                  child: Column(
+                    children: [
+                      CircleAvatar(
+                        backgroundImage: MemoryImage(widget.recipe.image),
+                      )
+                    ],
+                  )
+              ),
+              Flexible(
+                flex: 1,
+                child: Container(
+                    width: 120,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Container(
+                            child: Text(
+                              widget.recipe.name,
+                              style: TextStyle(fontSize: 15.5),
+                              )
+                        ),
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Text(
+                          widget.recipe.categoryName,
+                          style: Theme.of(context).textTheme.caption,
+                        ),
+                      ],
+                    )
                 ),
               ),
               // Spacer(),

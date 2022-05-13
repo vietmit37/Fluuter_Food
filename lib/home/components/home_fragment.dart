@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_food/home/components/search.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 
 import 'categoriesTab.dart';
@@ -18,11 +19,11 @@ class HomeFragment extends StatelessWidget {
               Stack(
                 children: <Widget>[
                   Container(
-                    height: height * 0.3,
+                    height: height * 0.29,
                     width: width,
                     decoration: BoxDecoration(
                         image:DecorationImage(
-                            image: AssetImage("assets/images/img1.jpg"),
+                            image: AssetImage("assets/images/bg_2.jpg"),
                             fit: BoxFit.cover
                         )
                     ),
@@ -42,23 +43,23 @@ class HomeFragment extends StatelessWidget {
                   ),
                   Positioned(
                     bottom: 90,
-                    left: 20,
+                    left: 30,
                     child: RichText(
                       text: TextSpan(
-                          text: "Welcome",
+                          text: "Xin chào !",
                           style: TextStyle(
                             color: Colors.white,
                             fontWeight: FontWeight.w300,
-                            fontSize: 20,
+                            fontSize: 24,
                           ),
                           children: [
                             TextSpan(
-                                text: "\nTutorial Cook",
+                                text: "\nVietCook",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w500,
-                                  fontSize: 24,
-                                )
+                                  fontSize: 30,
+                                ),
                             )
                           ]
                       ),
@@ -82,7 +83,7 @@ class HomeFragment extends StatelessWidget {
                     child: Column(
                       children: <Widget>[
                         TabBar(
-                          labelColor: Colors.redAccent,
+                          labelColor: Colors.orange,
                           unselectedLabelStyle: TextStyle(
                               fontWeight: FontWeight.normal,fontSize: 14
                           ),
@@ -91,14 +92,14 @@ class HomeFragment extends StatelessWidget {
                           indicatorColor: Colors.transparent,
                           tabs: <Widget>[
                             Tab(
-                              text: "Món mới".toUpperCase(),
+                              text: "Món ăn".toUpperCase(),
                             ),
                             Tab(
                               text: "Danh mục".toUpperCase(),
                             ),
                           ],
                           indicator: DotIndicator(
-                            color: Colors.redAccent,
+                            color: Colors.orange,
                             distanceFromCenter: 16,
                             radius: 3,
                             paintingStyle: PaintingStyle.fill,
@@ -115,18 +116,28 @@ class HomeFragment extends StatelessWidget {
                         ),
                         SizedBox(height: 5,),
                         Padding(
-                          padding: const EdgeInsets.only(left: 20,right: 20),
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextField(
+                            autofocus: false,
+                            onSubmitted: (value) {
+                              if (value != '') {
+                                Navigator.push(context,
+                                  MaterialPageRoute(
+                                    builder: (context) => SearchPage(searchKeyword: value),
+                                  ),
+                                );
+                              }
+                            },
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(vertical: 3),
                                 prefixIcon: Padding(
-                                  padding: const EdgeInsets.only(left: 15,right: 15),
+                                  padding: const EdgeInsets.symmetric(horizontal: 15),
                                   child: Icon(
                                     Icons.search,
                                     size: 30,
                                   ),
                                 ),
-                                hintText: "Search Cook",
+                                hintText: "Tìm kiếm",
                                 border: OutlineInputBorder(
                                     borderRadius: BorderRadius.circular(30),
                                     borderSide: BorderSide(
