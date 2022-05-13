@@ -106,6 +106,26 @@ class _FavoritePageState extends State<FavoritePage> {
                         )
                     );
                   }
+
+                  if (recipeList.length < 1) {
+                    return Column(
+                      children: [
+                        Center(
+                            child: Image.asset('assets/images/price_tag.png',
+                              height: 250,
+                              width: 150,
+                              color: Colors.black12,
+                              alignment: Alignment.bottomCenter,
+                            )
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Danh sách yêu thích trống', style: TextStyle(color: Colors.black54),)
+                      ],
+                    );
+                  }
+
                   return ListView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,
@@ -125,7 +145,8 @@ class _FavoritePageState extends State<FavoritePage> {
                                 padding: EdgeInsets.symmetric(vertical: 8),
                                 child: FavoriteRecipeCard(recipe: recipeList[index])
                             ),
-                          ));
+                          )
+                      );
                     },
                   );
                 })
