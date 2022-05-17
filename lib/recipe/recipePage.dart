@@ -21,10 +21,15 @@ class _RecipeDetailsState extends State<RecipeDetails> {
 
   _RecipeDetailsState(this.recipe);
 
+  _addToHistory() async {
+    await dbHelper.addToHistory(recipe);
+  }
+
   @override
   void initState() {
     dbHelper = DBHelper();
     likeColor = recipe.liked == 1 ? Colors.red : Colors.black;
+    _addToHistory();
     super.initState();
   }
 

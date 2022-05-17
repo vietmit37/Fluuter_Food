@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:path/path.dart';
 import 'package:project_food/model/Category.dart';
@@ -9,6 +10,8 @@ import 'package:sqflite/sqflite.dart';
 import 'Recipe.dart';
 
 class DBHelper {
+  final timeFormat = new DateFormat('HH:mm, dd/MM/yyyy');
+
   copyDB() async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, "MonAnDB.db");
@@ -43,6 +46,22 @@ class DBHelper {
     }
     db.close();
     return data;
+  }
+
+  Future<Recipe> getRecipeById(int id) async {
+    List<Recipe> data = new List<Recipe>();
+    Database db = await openDB();
+    var result = await db.rawQuery('SELECT * FROM Recipes WHERE id = $id');
+    for (var item in result.toList()){
+      data.add(Recipe(
+          id: item['id'], name: item['name'],
+          categoryName: item['categoryName'], ingredients: item['ingredients'],
+          preparation: item['preparation'], liked: item['liked'],
+          image: item['image'], time: item['time']
+      ));
+    }
+    db.close();
+    return data[0];
   }
 
   likeRecipe(int recipeID, int likedState) async {
@@ -120,13 +139,36 @@ class DBHelper {
   Future<List<History>> getHistory() async {
     List<History> data = new List<History>();
     Database db = await openDB();
-    var list = await db.query('History');
+    var list = await db.rawQuery("SELECT * FROM History ORDER BY id DESC");
     for (var item in list.toList()){
       data.add(History(
-          id: item['id'], recipeID: item['recipeID'], time: item['time']
+          id: item['id'], recipeID: item['recipeID'], time: item['time'],
+          recipeName: item['recipeName']
       ));
     }
     db.close();
     return data;
+  }
+
+  Future<int> addToHistory(Recipe recipe) async {
+    Database db = await openDB();
+
+    Map<String, String> values = {
+      'recipeID': recipe.id.toString(),
+      'recipeName': recipe.name,
+      'time': timeFormat.format(DateTime.now()).toString()
+    };
+    var result = db.insert('History', values);
+
+    db.close();
+    return result;
+  }
+
+  Future<int> deleteHistory() async {
+    Database db = await openDB();
+
+    var result = db.delete('History');
+
+    return result;
   }
 }
