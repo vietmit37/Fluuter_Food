@@ -42,14 +42,9 @@ class _SearchPageState extends State<SearchPage> {
           child: Icon(Icons.arrow_back_ios, color: Colors.black,),
         ),
         title: TextField(
-          controller: TextEditingController()..text = widget.searchKeyword,
-          autofocus: false,
-          // onChanged: (value) async {
-          //   await Future.delayed(Duration(seconds: 2));
-          //   setState(() {
-          //     widget.searchKeyword = value;
-          //   });
-          // },
+          controller: TextEditingController()..text =
+            widget.searchKeyword != "@#!" ? widget.searchKeyword : "",
+          autofocus: true,
           onSubmitted: (value) {
             if (value == '') {
               return;

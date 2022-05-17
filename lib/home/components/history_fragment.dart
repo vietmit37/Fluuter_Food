@@ -46,6 +46,7 @@ class _HistoryPageState extends State<HistoryPage> {
             onPressed: () {
               setState(() {
                 dbHelper.deleteHistory();
+                historyList.length = 0;
               });
             },
             color: Colors.white,
@@ -75,7 +76,7 @@ class _HistoryPageState extends State<HistoryPage> {
                     children: [
                       Center(
                           child: Image.asset('assets/images/price_tag.png',
-                            height: 280,
+                            height: 250,
                             width: 150,
                             color: Colors.black12,
                             alignment: Alignment.bottomCenter,

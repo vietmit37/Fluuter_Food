@@ -34,6 +34,7 @@ class DBHelper {
   Future<List<Recipe>> getRecipeList(int limit) async {
     List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
+
     // var list = await db.rawQuery('SELECT * FROM Students');
     var list = await db.query('Recipes', limit: limit);
     for (var item in list.toList()){
@@ -44,6 +45,7 @@ class DBHelper {
           image: item['image'], time: item['time']
       ));
     }
+
     db.close();
     return data;
   }
@@ -51,6 +53,7 @@ class DBHelper {
   Future<Recipe> getRecipeById(int id) async {
     List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
+
     var result = await db.rawQuery('SELECT * FROM Recipes WHERE id = $id');
     for (var item in result.toList()){
       data.add(Recipe(
@@ -60,23 +63,25 @@ class DBHelper {
           image: item['image'], time: item['time']
       ));
     }
+
     db.close();
     return data[0];
   }
 
-  likeRecipe(int recipeID, int likedState) async {
+  Future<int> likeRecipe(int recipeID, int likedState) async {
     Database db = await openDB();
     int setStatus = likedState == 1 ? 0 : 1;
     await db.rawQuery("UPDATE Recipes SET liked = $setStatus WHERE id = $recipeID");
     // var list = await db.query('Recipes', limit: limit);
     db.close();
+    return 1;
   }
 
   Future<List<Recipe>> getRecipesByCate(String categoryName) async {
     List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
+
     var list = await db.rawQuery("SELECT * FROM Recipes WHERE categoryName = '$categoryName'");
-    // var list = await db.query('Recipes', limit: limit);
     for (var item in list.toList()){
       data.add(Recipe(
           id: item['id'], name: item['name'],
@@ -85,6 +90,7 @@ class DBHelper {
           image: item['image'], categoryName: item['categoryName']
       ));
     }
+
     db.close();
     return data;
   }
@@ -92,13 +98,14 @@ class DBHelper {
   Future<List<Category>> getCategoryList() async {
     List<Category> data = new List<Category>();
     Database db = await openDB();
-    // var list = await db.rawQuery('SELECT name FROM Categories');
+
     var list = await db.query('Categories');
     for (var item in list.toList()){
       data.add(Category(
           name: item['name'], image: item['image']
       ));
     }
+
     db.close();
     return data;
   }
@@ -106,8 +113,8 @@ class DBHelper {
   Future<List<Recipe>> getLikedRecipes() async {
     List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
+
     var list = await db.rawQuery("SELECT * FROM Recipes WHERE liked = 1");
-    // var list = await db.query('Recipes', limit: limit);
     for (var item in list.toList()){
       data.add(Recipe(
           id: item['id'], name: item['name'],
@@ -116,6 +123,7 @@ class DBHelper {
           image: item['image'], categoryName: item['categoryName']
       ));
     }
+
     db.close();
     return data;
   }
@@ -123,6 +131,7 @@ class DBHelper {
   Future<List<Recipe>> searchRecipes(String searchKeyword) async {
     List<Recipe> data = new List<Recipe>();
     Database db = await openDB();
+
     var list = await db.rawQuery("SELECT * FROM Recipes WHERE name LIKE '%$searchKeyword%';");
     for (var item in list.toList()){
       data.add(Recipe(
@@ -132,6 +141,7 @@ class DBHelper {
           image: item['image'], categoryName: item['categoryName']
       ));
     }
+
     db.close();
     return data;
   }
@@ -139,13 +149,26 @@ class DBHelper {
   Future<List<History>> getHistory() async {
     List<History> data = new List<History>();
     Database db = await openDB();
+
     var list = await db.rawQuery("SELECT * FROM History ORDER BY id DESC");
     for (var item in list.toList()){
-      data.add(History(
-          id: item['id'], recipeID: item['recipeID'], time: item['time'],
-          recipeName: item['recipeName']
-      ));
+      bool recipeAlreadyExist = false;
+
+      for (var history in data){
+        if (history.recipeID == item['recipeID']){
+          recipeAlreadyExist = true;
+          break;
+        }
+      }
+
+      if (!recipeAlreadyExist){
+        data.add(History(
+            id: item['id'], recipeID: item['recipeID'], time: item['time'],
+            recipeName: item['recipeName']
+        ));
+      }
     }
+
     db.close();
     return data;
   }
@@ -168,6 +191,7 @@ class DBHelper {
     Database db = await openDB();
 
     var result = db.delete('History');
+    db.close();
 
     return result;
   }
