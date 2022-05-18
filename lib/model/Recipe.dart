@@ -1,7 +1,7 @@
 import 'dart:typed_data';
 
 class Recipe {
-  String name, ingredients, preparation, categoryName;
+  String name, ingredients, preparation, categoryName, videoURL;
   int id, time;
   int liked;
   Uint8List image;
@@ -15,5 +15,6 @@ class Recipe {
     this.image,
     this.time,
     this.liked,
+    this.videoURL,
   });
 }

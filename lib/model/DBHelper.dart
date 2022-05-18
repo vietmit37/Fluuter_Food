@@ -42,7 +42,7 @@ class DBHelper {
           id: item['id'], name: item['name'],
           categoryName: item['categoryName'], ingredients: item['ingredients'],
           preparation: item['preparation'], liked: item['liked'],
-          image: item['image'], time: item['time']
+          image: item['image'], time: item['time'], videoURL: item['videoURL']
       ));
     }
 
@@ -60,7 +60,7 @@ class DBHelper {
           id: item['id'], name: item['name'],
           categoryName: item['categoryName'], ingredients: item['ingredients'],
           preparation: item['preparation'], liked: item['liked'],
-          image: item['image'], time: item['time']
+          image: item['image'], time: item['time'], videoURL: item['videoURL']
       ));
     }
 

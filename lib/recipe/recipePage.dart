@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:project_food/model/DBHelper.dart';
 import 'package:project_food/model/Recipe.dart';
@@ -172,7 +173,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                             Ingredients(recipeModel: recipe),
                             Preparations(recipe: recipe),
                             Container(
-                              child: Video(),
+                              child: Video(recipe.videoURL),
                             ),
                           ],
                         ),
@@ -282,25 +283,30 @@ class Preparations extends StatelessWidget {
 }
 
 class Video extends StatefulWidget {
+  final String videoURL;
+  Video(this.videoURL);
+
   @override
   State<Video> createState() => _VideoState();
-
 }
 
 class _VideoState extends State<Video> {
   YoutubePlayerController _controller;
+
   @override
   void initState(){
     super.initState();
-    const url='https://www.youtube.com/watch?v=W-rHIsDFrzQ';
-    _controller=YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(url),
+    String url = 'https://www.youtube.com/watch?v=${widget.videoURL}';
+    _controller = YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(url),
     );
   }
+
   @override
   void deactivate(){
     _controller.pause();
     super.deactivate();
   }
+
   @override
   void dispose(){
     _controller.dispose();
@@ -308,12 +314,14 @@ class _VideoState extends State<Video> {
   }
   @override
   Widget build(BuildContext context) {
-    return YoutubePlayerBuilder(player: YoutubePlayer(controller: _controller,), builder: (context,player){
-      return ListView(
-          children:[
-            player,
-          ]
-      );
+    return YoutubePlayerBuilder(
+        player: YoutubePlayer(controller: _controller),
+        builder: (context,player){
+          return ListView(
+              children:[
+                player,
+              ]
+          );
     });
   }
 }
