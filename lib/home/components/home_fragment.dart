@@ -92,7 +92,7 @@ class HomeFragment extends StatelessWidget {
                           indicatorColor: Colors.transparent,
                           tabs: <Widget>[
                             Tab(
-                              text: "Món mới".toUpperCase(),
+                              text: "Món ăn".toUpperCase(),
                             ),
                             Tab(
                               text: "Danh mục".toUpperCase(),
@@ -118,14 +118,24 @@ class HomeFragment extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextField(
+                            readOnly: true,
                             autofocus: false,
-                            onSubmitted: (value) {
+                            onTap: () {
                               Navigator.push(context,
                                 MaterialPageRoute(
-                                  builder: (context) => SearchPage(searchKeyword: value),
+                                  builder: (context) => SearchPage(searchKeyword: '@#!'),
                                 ),
                               );
                             },
+                            // onSubmitted: (value) {
+                            //   if (value != '') {
+                            //     Navigator.push(context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => SearchPage(searchKeyword: value),
+                            //       ),
+                            //     );
+                            //   }
+                            // },
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(vertical: 3),
                                 prefixIcon: Padding(

@@ -43,9 +43,13 @@ class _SearchPageState extends State<SearchPage> {
         ),
 
         title: TextField(
-          controller: TextEditingController()..text = widget.searchKeyword,
-          autofocus: false,
+          controller: TextEditingController()..text =
+            widget.searchKeyword != "@#!" ? widget.searchKeyword : "",
+          autofocus: true,
           onSubmitted: (value) {
+            if (value == '') {
+              return;
+            }
             setState(() {
               widget.searchKeyword = value;
             });
@@ -90,6 +94,26 @@ class _SearchPageState extends State<SearchPage> {
                         )
                     );
                   }
+
+                  if (recipeList.length < 1) {
+                    return Column(
+                      children: [
+                        Center(
+                            child: Image.asset('assets/images/search_logo.png',
+                              height: 210,
+                              width: 150,
+                              color: Colors.black12,
+                              alignment: Alignment.bottomCenter,
+                            )
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Text('Nhập từ khóa để tìm kiếm', style: TextStyle(color: Colors.black54),)
+                      ],
+                    );
+                  }
+
                   return ListView.builder(
                     physics: ScrollPhysics(),
                     shrinkWrap: true,

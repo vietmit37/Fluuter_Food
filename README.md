@@ -1,16 +1,21 @@
 # project_food
+Flutter v1.22.4
+Dart v2.10.4
+Đồ án Flutter HUFLIT (Đại học Ngoại Ngữ - Tin Học TP.HCM).
 
-A new Flutter project.
+## Các thành viên:
+1) Nguyễn Thanh Tùng
+2) Ngô Duy Khang
+3) Lê Duy Thắng
 
-## Getting Started
+## Nội dung
 
-This project is a starting point for a Flutter application.
+App Flutter công thức nấu ăn sử dụng SQLite, bao gồm các chức năng:
 
-A few resources to get you started if this is your first Flutter project:
++ Xem món ăn
++ Yêu thích món ăn
++ Tìm kiếm món ăn
++ Xem món ăn theo danh mục
++ Hiện lịch sử các món đã xem
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Lưu ý: pub get trước khi chạy bài lần đầu tiên.
