@@ -118,16 +118,24 @@ class HomeFragment extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextField(
+                            readOnly: true,
                             autofocus: false,
-                            onSubmitted: (value) {
-                              if (value != '') {
-                                Navigator.push(context,
-                                  MaterialPageRoute(
-                                    builder: (context) => SearchPage(searchKeyword: value),
-                                  ),
-                                );
-                              }
+                            onTap: () {
+                              Navigator.push(context,
+                                MaterialPageRoute(
+                                  builder: (context) => SearchPage(searchKeyword: '@#!'),
+                                ),
+                              );
                             },
+                            // onSubmitted: (value) {
+                            //   if (value != '') {
+                            //     Navigator.push(context,
+                            //       MaterialPageRoute(
+                            //         builder: (context) => SearchPage(searchKeyword: value),
+                            //       ),
+                            //     );
+                            //   }
+                            // },
                             decoration: InputDecoration(
                                 contentPadding: EdgeInsets.symmetric(vertical: 3),
                                 prefixIcon: Padding(

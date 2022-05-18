@@ -1,10 +1,11 @@
 class History {
   int id, recipeID;
-  DateTime time;
+  String recipeName, time;
 
   History({
     this.id,
     this.recipeID,
+    this.recipeName,
     this.time
   });
 }

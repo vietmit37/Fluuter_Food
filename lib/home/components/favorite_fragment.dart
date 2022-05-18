@@ -15,6 +15,11 @@ class _FavoritePageState extends State<FavoritePage> {
   List<Recipe> recipeList;
   String dropdownValue = 'Sắp xếp A-Z';
 
+  refresh() {
+    setState(() {});
+  }
+
+
   Future<List<Recipe>> _getLikedRecipes(String sortValue) async {
     recipeList = await dbHelper.getLikedRecipes();
 
@@ -143,7 +148,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                 ),
                             child: Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8),
-                                child: FavoriteRecipeCard(recipe: recipeList[index])
+                                child: new FavoriteRecipeCard(recipe: recipeList[index], notifyParent: refresh)
                             ),
                           )
                       );
@@ -159,8 +164,10 @@ class _FavoritePageState extends State<FavoritePage> {
 
 class FavoriteRecipeCard extends StatefulWidget {
   final Recipe recipe;
+  final Function() notifyParent;
+
   FavoriteRecipeCard({
-    @required this.recipe,
+    @required this.recipe, @required this.notifyParent
   });
 
   @override
@@ -246,6 +253,7 @@ class _FavoriteRecipeCardState extends State<FavoriteRecipeCard> {
                         setState(() {
                           dbHelper.likeRecipe(widget.recipe.id, widget.recipe.liked);
                           likeColor = likeColor == Colors.red ? Colors.black : Colors.red;
+                          widget.notifyParent();
                         });
                       },
                       child: Icon(

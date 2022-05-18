@@ -1,10 +1,12 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:project_food/model/DBHelper.dart';
 import 'package:project_food/model/Recipe.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class RecipeDetails extends StatefulWidget {
   final Recipe recipe;
@@ -21,10 +23,15 @@ class _RecipeDetailsState extends State<RecipeDetails> {
 
   _RecipeDetailsState(this.recipe);
 
+  _addToHistory() async {
+    await dbHelper.addToHistory(recipe);
+  }
+
   @override
   void initState() {
     dbHelper = DBHelper();
     likeColor = recipe.liked == 1 ? Colors.red : Colors.black;
+    _addToHistory();
     super.initState();
   }
 
@@ -166,7 +173,7 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                             Ingredients(recipeModel: recipe),
                             Preparations(recipe: recipe),
                             Container(
-                              child: Text("Video Tab"),
+                              child: Video(recipe.videoURL),
                             ),
                           ],
                         ),
@@ -272,5 +279,49 @@ class Preparations extends StatelessWidget {
         child: Text(recipe.preparation, textAlign: TextAlign.justify, style: TextStyle(height: 1.4))
       )
     );
+  }
+}
+
+class Video extends StatefulWidget {
+  final String videoURL;
+  Video(this.videoURL);
+
+  @override
+  State<Video> createState() => _VideoState();
+}
+
+class _VideoState extends State<Video> {
+  YoutubePlayerController _controller;
+
+  @override
+  void initState(){
+    super.initState();
+    String url = 'https://www.youtube.com/watch?v=${widget.videoURL}';
+    _controller = YoutubePlayerController(initialVideoId: YoutubePlayer.convertUrlToId(url),
+    );
+  }
+
+  @override
+  void deactivate(){
+    _controller.pause();
+    super.deactivate();
+  }
+
+  @override
+  void dispose(){
+    _controller.dispose();
+    super.dispose();
+  }
+  @override
+  Widget build(BuildContext context) {
+    return YoutubePlayerBuilder(
+        player: YoutubePlayer(controller: _controller),
+        builder: (context,player){
+          return ListView(
+              children:[
+                player,
+              ]
+          );
+    });
   }
 }
