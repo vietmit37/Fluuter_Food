@@ -115,7 +115,6 @@ class _SplashScreenState extends  State<SplashScreen>{
                   ],
                 ),
               )
-
           )
         ],
       ),
@@ -127,7 +126,6 @@ class _SplashScreenState extends  State<SplashScreen>{
           else{
             _pageController.nextPage(duration: const Duration(milliseconds: 300), curve: Curves.linear);
           }
-
         },
         child: const Icon(CupertinoIcons.chevron_right,color:Colors.white,),
         backgroundColor: Colors.transparent,

@@ -41,6 +41,7 @@ class _SearchPageState extends State<SearchPage> {
           },
           child: Icon(Icons.arrow_back_ios, color: Colors.black,),
         ),
+
         title: TextField(
           controller: TextEditingController()..text = widget.searchKeyword,
           autofocus: false,
