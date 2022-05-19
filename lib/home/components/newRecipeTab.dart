@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:project_food/recipe/recipePage.dart';
 
 import '../../model/DBHelper.dart';
@@ -40,6 +42,9 @@ class _NewRecipeState extends State<NewRecipe> {
                   bottom: 12.0,
                 )
             ),
+            Container(
+              child: Ads(),
+            ),
             FutureBuilder<List<Recipe>>(
               future: getRecipeList(),
               builder: (BuildContext context, AsyncSnapshot<List<Recipe>> snapshot) {
@@ -54,7 +59,7 @@ class _NewRecipeState extends State<NewRecipe> {
                   );
                 }
                 return Container(
-                    margin: EdgeInsets.only(bottom: 85),
+                    margin: EdgeInsets.only(bottom: 20),
                     child: ListView.builder(
                       physics: ScrollPhysics(),
                       shrinkWrap: true,
@@ -82,7 +87,13 @@ class _NewRecipeState extends State<NewRecipe> {
                         );
                       },
                 ));
-              })
+              }),
+            Container(
+              child: Ads(),
+            ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
@@ -201,5 +212,52 @@ class _RecipeCardState extends State<RecipeCard> {
         ),
       ],
     );
+  }
+}
+class Ads extends StatefulWidget {
+
+  @override
+  State<Ads> createState() => _AdsState();
+}
+
+class _AdsState extends State<Ads> {
+  final BannerAd myBanner = BannerAd(
+    adUnitId: Platform.isAndroid ?'ca-app-pub-5322148073127387/4138719623':'ca-app-pub-3940256099942544/2934735716',
+    size: AdSize.fullBanner,
+    request: AdRequest(),
+    listener: AdListener(
+      // Called when an ad is successfully received.
+      onAdLoaded: (Ad ad) => print('Ad loaded.'),
+      // Called when an ad request failed.
+      onAdFailedToLoad: (Ad ad, LoadAdError error) {
+        ad.dispose();
+        print('Ad failed to load: $error');
+      },
+      // Called when an ad opens an overlay that covers the screen.
+      onAdOpened: (Ad ad) => print('Ad opened.'),
+      // Called when an ad removes an overlay that covers the screen.
+      onAdClosed: (Ad ad) => print('Ad closed.'),
+      // Called when an ad is in the process of leaving the application.
+      onApplicationExit: (Ad ad) => print('Left application.'),
+    ),
+  );
+
+  @override
+  void initState() {
+    super.initState();
+    myBanner.load();
+    // Load ads.
+  }
+  @override
+  Widget build(BuildContext context) {
+    return  Stack(
+        children: [
+          Positioned(child: Container(
+            width: 468.0,
+            height: 60,
+            child: AdWidget(ad: myBanner,),
+          ))
+        ],
+      );
   }
 }
