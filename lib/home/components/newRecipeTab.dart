@@ -222,11 +222,10 @@ class Ads extends StatefulWidget {
 
 class _AdsState extends State<Ads> {
   final BannerAd myBanner = BannerAd(
-    adUnitId: Platform.isAndroid ?'ca-app-pub-5322148073127387/4138719623':'ca-app-pub-3940256099942544/2934735716',
-    size: AdSize.fullBanner,
+    adUnitId: Platform.isAndroid ?'ca-app-pub-3940256099942544/6300978111':'ca-app-pub-3940256099942544/2934735716',
+    size: AdSize.banner,
     request: AdRequest(),
     listener: AdListener(
-      // Called when an ad is successfully received.
       onAdLoaded: (Ad ad) => print('Ad loaded.'),
       // Called when an ad request failed.
       onAdFailedToLoad: (Ad ad, LoadAdError error) {
@@ -239,6 +238,7 @@ class _AdsState extends State<Ads> {
       onAdClosed: (Ad ad) => print('Ad closed.'),
       // Called when an ad is in the process of leaving the application.
       onApplicationExit: (Ad ad) => print('Left application.'),
+
     ),
   );
 
@@ -253,7 +253,7 @@ class _AdsState extends State<Ads> {
     return  Stack(
         children: [
           Positioned(child: Container(
-            width: 468.0,
+            width: 320,
             height: 60,
             child: AdWidget(ad: myBanner,),
           ))

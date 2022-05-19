@@ -87,7 +87,7 @@ class DBHelper {
           id: item['id'], name: item['name'],
           ingredients: item['ingredients'], time: item['time'],
           preparation: item['preparation'], liked: item['liked'],
-          image: item['image'], categoryName: item['categoryName']
+          image: item['image'], categoryName: item['categoryName'], videoURL: item['videoURL']
       ));
     }
 
@@ -120,7 +120,7 @@ class DBHelper {
           id: item['id'], name: item['name'],
           ingredients: item['ingredients'], time: item['time'],
           preparation: item['preparation'], liked: item['liked'],
-          image: item['image'], categoryName: item['categoryName']
+          image: item['image'], categoryName: item['categoryName'], videoURL: item['videoURL']
       ));
     }
 
@@ -138,7 +138,7 @@ class DBHelper {
           id: item['id'], name: item['name'],
           ingredients: item['ingredients'], time: item['time'],
           preparation: item['preparation'], liked: item['liked'],
-          image: item['image'], categoryName: item['categoryName']
+          image: item['image'], categoryName: item['categoryName'], videoURL: item['videoURL']
       ));
     }
 
