@@ -1,13 +1,18 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_icons/flutter_icons.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:project_food/model/DBHelper.dart';
 import 'package:project_food/model/Recipe.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:sliding_up_panel/sliding_up_panel.dart';
 import 'package:tab_indicator_styler/tab_indicator_styler.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
+enum SocialMedia{facebook}
 class RecipeDetails extends StatefulWidget {
   final Recipe recipe;
   const RecipeDetails({Key key, this.recipe}) : super(key: key);
@@ -28,6 +33,9 @@ class _RecipeDetailsState extends State<RecipeDetails> {
   }
 
   @override
+
+
+
   void initState() {
     dbHelper = DBHelper();
     likeColor = recipe.liked == 1 ? Colors.red : Colors.black;
@@ -120,6 +128,23 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   SizedBox(
                     width: 10,
                   ),
+                  // ElevatedButton(
+                  //     onPressed:() async{
+                  //       await Share.share(' https://play.google.com/store/apps/details?id=com.instructivetech.testapp');
+                  //     }, child: Text('Share'))
+                  IconButton(
+                    icon: Icon(FontAwesome.share_alt_square),
+                    color: Colors.orangeAccent,
+                    onPressed:() async{
+                      final bytes = await rootBundle.load('assets/images/img1.jpg');
+                      final list = bytes.buffer.asUint8List();
+
+                      final tempDir = await getTemporaryDirectory();
+                      final file = await File('${tempDir.path}/image.jpg').create();
+                      file.writeAsBytesSync(list);
+                      await Share.shareFiles(['${file.path}'], text: 'Great picture');
+                      },
+                  )
                 ],
               ),
               SizedBox(
