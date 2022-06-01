@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -135,14 +136,11 @@ class _RecipeDetailsState extends State<RecipeDetails> {
                   IconButton(
                     icon: Icon(FontAwesome.share_alt_square),
                     color: Colors.orangeAccent,
-                    onPressed:() async{
-                      final bytes = await rootBundle.load('assets/images/img1.jpg');
-                      final list = bytes.buffer.asUint8List();
-
-                      final tempDir = await getTemporaryDirectory();
-                      final file = await File('${tempDir.path}/image.jpg').create();
-                      file.writeAsBytesSync(list);
-                      await Share.shareFiles(['${file.path}'], text: 'Great picture');
+                    onPressed:() async {
+                        final tempDir = await getTemporaryDirectory();
+                        final file = await File('${tempDir.path}/image.jpg').create();
+                        file.writeAsBytesSync(recipe.image);
+                        await Share.shareFiles(['${file.path}'], text: 'Great picture');
                       },
                   )
                 ],
